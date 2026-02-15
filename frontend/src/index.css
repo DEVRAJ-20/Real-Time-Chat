@@ -1,3 +1,161 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===== Auth Page Animations ===== */
+
+/* Floating particle animation */
+@keyframes float-particle {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  25% {
+    transform: translate(30px, -50px) scale(1.1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-20px, -100px) scale(0.9);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(50px, -50px) scale(1.05);
+    opacity: 0.6;
+  }
+}
+
+/* Gradient background shift */
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Slide up + fade in */
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow pulse for buttons */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px oklch(var(--p) / 0.3), 0 0 15px oklch(var(--p) / 0.15);
+  }
+  50% {
+    box-shadow: 0 0 15px oklch(var(--p) / 0.5), 0 0 40px oklch(var(--p) / 0.25);
+  }
+}
+
+/* Float up for chat bubbles */
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(60px) scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(-10px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(0.8);
+  }
+}
+
+/* Ripple ring effect */
+@keyframes ripple-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Bounce for typing dots */
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-8px); }
+}
+
+/* Rotate slowly */
+@keyframes slow-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Shimmer across text */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ===== Utility classes ===== */
+
+.animate-float-particle {
+  animation: float-particle var(--duration, 6s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-float-up {
+  animation: float-up var(--duration, 4s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-ripple-ring {
+  animation: ripple-ring 3s ease-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-typing-bounce {
+  animation: typing-bounce 1.4s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.animate-slow-spin {
+  animation: slow-spin 20s linear infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Glassmorphism card */
+.glass-card {
+  background: oklch(var(--b1) / 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid oklch(var(--bc) / 0.08);
+  box-shadow: 
+    0 8px 32px oklch(var(--bc) / 0.06),
+    inset 0 1px 0 oklch(var(--bc) / 0.05);
+}
