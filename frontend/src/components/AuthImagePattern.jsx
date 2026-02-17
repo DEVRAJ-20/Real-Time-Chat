@@ -11,16 +11,34 @@ const AuthImagePattern = ({ title, subtitle }) => {
   ];
 
   return (
-    <div className="hidden lg:flex relative items-center justify-center overflow-hidden bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 animate-gradient-shift">
+    <div
+      className="hidden lg:flex relative items-center justify-center overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(34, 211, 238, 0.06), rgba(167, 139, 250, 0.04), rgba(244, 114, 182, 0.03))",
+        backgroundSize: "300% 300%",
+        animation: "aurora-flow 15s ease infinite",
+      }}
+    >
+      {/* Aurora glow orbs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full blur-3xl opacity-10"
+          style={{ background: "var(--aurora-emerald)" }} />
+        <div className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full blur-3xl opacity-8"
+          style={{ background: "var(--aurora-teal)" }} />
+        <div className="absolute top-1/2 right-1/3 w-56 h-56 rounded-full blur-3xl opacity-5"
+          style={{ background: "var(--aurora-purple)" }} />
+      </div>
+
       {/* Animated ripple rings */}
       <div className="absolute inset-0 flex items-center justify-center">
         {[...Array(3)].map((_, i) => (
           <div
             key={`ring-${i}`}
-            className="absolute rounded-full border-2 border-primary/20 animate-ripple-ring"
+            className="absolute rounded-full animate-ripple-ring"
             style={{
               width: `${200 + i * 100}px`,
               height: `${200 + i * 100}px`,
+              border: "1px solid rgba(34, 211, 238, 0.12)",
               "--delay": `${i * 1}s`,
             }}
           />
@@ -29,10 +47,10 @@ const AuthImagePattern = ({ title, subtitle }) => {
 
       {/* Slowly rotating decorative circle */}
       <div className="absolute w-[500px] h-[500px] animate-slow-spin opacity-10">
-        <div className="absolute top-0 left-1/2 w-3 h-3 -translate-x-1/2 rounded-full bg-primary" />
-        <div className="absolute bottom-0 left-1/2 w-3 h-3 -translate-x-1/2 rounded-full bg-secondary" />
-        <div className="absolute left-0 top-1/2 w-3 h-3 -translate-y-1/2 rounded-full bg-accent" />
-        <div className="absolute right-0 top-1/2 w-3 h-3 -translate-y-1/2 rounded-full bg-primary" />
+        <div className="absolute top-0 left-1/2 w-3 h-3 -translate-x-1/2 rounded-full" style={{ background: "var(--aurora-emerald)" }} />
+        <div className="absolute bottom-0 left-1/2 w-3 h-3 -translate-x-1/2 rounded-full" style={{ background: "var(--aurora-purple)" }} />
+        <div className="absolute left-0 top-1/2 w-3 h-3 -translate-y-1/2 rounded-full" style={{ background: "var(--aurora-teal)" }} />
+        <div className="absolute right-0 top-1/2 w-3 h-3 -translate-y-1/2 rounded-full" style={{ background: "var(--aurora-pink)" }} />
       </div>
 
       {/* Floating chat icons */}
@@ -40,42 +58,56 @@ const AuthImagePattern = ({ title, subtitle }) => {
         <div
           key={`icon-${i}`}
           className="absolute animate-float-up"
-          style={{
-            left: x,
-            top: y,
-            "--delay": delay,
-            "--duration": duration,
-          }}
+          style={{ left: x, top: y, "--delay": delay, "--duration": duration }}
         >
-          <div className="p-3 rounded-2xl bg-primary/10 backdrop-blur-sm border border-primary/20 shadow-lg">
-            <Icon className={`${size} text-primary/70`} />
+          <div
+            className="p-3 rounded-2xl backdrop-blur-sm"
+            style={{
+              background: "rgba(16, 185, 129, 0.06)",
+              border: "1px solid rgba(34, 211, 238, 0.1)",
+              boxShadow: "0 4px 15px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <Icon className={`${size}`} style={{ color: "rgba(34, 211, 238, 0.5)" }} />
           </div>
         </div>
       ))}
 
       {/* Center content */}
       <div className="relative z-10 max-w-md text-center p-8">
-        {/* Chat bubble mockup */}
         <div className="mb-8 space-y-3">
           <div className="animate-slide-up flex justify-start" style={{ "--delay": "0.2s" }}>
-            <div className="bg-base-100/80 backdrop-blur-sm rounded-2xl rounded-bl-md px-5 py-3 shadow-lg max-w-[200px]">
-              <p className="text-sm text-base-content/80">Hey! 👋 Welcome</p>
+            <div
+              className="rounded-2xl rounded-bl-md px-5 py-3 max-w-[200px]"
+              style={{
+                background: "var(--bg-elevated)",
+                border: "1px solid rgba(34, 211, 238, 0.08)",
+                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
+              }}
+            >
+              <p className="text-sm" style={{ color: "var(--text-primary)", opacity: 0.8 }}>Hey! 👋 Welcome</p>
             </div>
           </div>
           <div className="animate-slide-up flex justify-end" style={{ "--delay": "0.5s" }}>
-            <div className="bg-primary text-primary-content rounded-2xl rounded-br-md px-5 py-3 shadow-lg max-w-[200px]">
+            <div className="msg-sent px-5 py-3 max-w-[200px]" style={{ boxShadow: "0 4px 20px rgba(16, 185, 129, 0.2)" }}>
               <p className="text-sm">Thanks! 🎉</p>
             </div>
           </div>
           <div className="animate-slide-up flex justify-start" style={{ "--delay": "0.8s" }}>
-            <div className="bg-base-100/80 backdrop-blur-sm rounded-2xl rounded-bl-md px-5 py-3 shadow-lg">
-              {/* Typing indicator */}
+            <div
+              className="rounded-2xl rounded-bl-md px-5 py-3"
+              style={{
+                background: "var(--bg-elevated)",
+                border: "1px solid rgba(34, 211, 238, 0.08)",
+                boxShadow: "0 4px 15px rgba(0, 0, 0, 0.3)",
+              }}
+            >
               <div className="flex items-center gap-1 py-1">
                 {[0, 1, 2].map((dot) => (
                   <div
                     key={dot}
-                    className="w-2 h-2 rounded-full bg-base-content/40 animate-typing-bounce"
-                    style={{ "--delay": `${dot * 0.15}s` }}
+                    className="w-2 h-2 rounded-full animate-typing-bounce"
+                    style={{ background: "var(--text-muted)", "--delay": `${dot * 0.15}s` }}
                   />
                 ))}
               </div>
@@ -83,23 +115,18 @@ const AuthImagePattern = ({ title, subtitle }) => {
           </div>
         </div>
 
-        {/* Title */}
-        <h2
-          className="text-3xl font-bold mb-3 animate-slide-up bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent animate-shimmer"
-          style={{ "--delay": "1s" }}
-        >
+        <h2 className="text-3xl font-bold mb-3 animate-slide-up gradient-text" style={{ "--delay": "1s" }}>
           {title}
         </h2>
-        <p
-          className="text-base-content/60 animate-slide-up leading-relaxed"
-          style={{ "--delay": "1.2s" }}
-        >
+        <p className="animate-slide-up leading-relaxed text-sm" style={{ color: "var(--text-muted)", "--delay": "1.2s" }}>
           {subtitle}
         </p>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-base-100/30 to-transparent" />
+      <div
+        className="absolute bottom-0 left-0 right-0 h-32"
+        style={{ background: "linear-gradient(to top, rgba(5, 10, 14, 0.4), transparent)" }}
+      />
     </div>
   );
 };
