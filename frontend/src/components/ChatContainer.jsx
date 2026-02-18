@@ -33,7 +33,7 @@ const ChatContainer = () => {
 
   if (isMessagesLoading) {
     return (
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-auto">
         <ChatHeader />
         <MessageSkeleton />
         <MessageInput />
@@ -42,7 +42,7 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden">
+    <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -51,7 +51,7 @@ const ChatContainer = () => {
           return (
             <div
               key={message._id}
-              className={`chat ${isSent ? "chat-end" : "chat-start"} animate-message-in`}
+              className={`chat ${isSent ? "chat-end" : "chat-start"}`}
             >
               <div className="chat-image avatar">
                 <div className="size-10 rounded-full border">
