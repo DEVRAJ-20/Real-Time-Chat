@@ -19,7 +19,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="h-screen pt-20 aurora-bg" style={{ background: "var(--bg-deep)" }}>
+    <div className="min-h-screen pt-20 pb-10 aurora-bg" style={{ background: "var(--bg-deep)" }}>
       <div className="relative z-10 max-w-2xl mx-auto p-4 py-8">
         <div className="glass-card rounded-2xl p-8 space-y-8 animate-slide-up" style={{ "--delay": "0.1s" }}>
           {/* Header */}

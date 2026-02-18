@@ -33,7 +33,7 @@ const ChatContainer = () => {
 
   if (isMessagesLoading) {
     return (
-      <div className="flex-1 flex flex-col overflow-auto">
+      <div className="flex-1 flex flex-col overflow-hidden">
         <ChatHeader />
         <MessageSkeleton />
         <MessageInput />
@@ -42,7 +42,7 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-auto" style={{ background: "var(--bg-deep)" }}>
+    <div className="flex-1 flex flex-col overflow-hidden" style={{ background: "var(--bg-deep)" }}>
       <ChatHeader />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -52,7 +52,6 @@ const ChatContainer = () => {
             <div
               key={message._id}
               className={`flex ${isSent ? "justify-end" : "justify-start"} animate-message-in`}
-              ref={messageEndRef}
             >
               {!isSent && (
                 <div className="flex-shrink-0 mr-2 self-end">
@@ -97,6 +96,8 @@ const ChatContainer = () => {
             </div>
           );
         })}
+        {/* Scroll anchor — always at the bottom */}
+        <div ref={messageEndRef} />
       </div>
 
       <MessageInput />
