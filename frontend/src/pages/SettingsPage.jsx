@@ -1,122 +1,105 @@
-import { Sparkles, Palette, Monitor } from "lucide-react";
+import { THEMES } from "../constants";
+import { useThemeStore } from "../store/useThemeStore";
+import { Send } from "lucide-react";
+
+const PREVIEW_MESSAGES = [
+  { id: 1, content: "Hey! How's it going?", isSent: false },
+  { id: 2, content: "I'm doing great! Just working on some new features.", isSent: true },
+];
 
 const SettingsPage = () => {
+  const { theme, setTheme } = useThemeStore();
+
   return (
-    <div className="min-h-screen pt-20 pb-10 aurora-bg" style={{ background: "var(--bg-deep)" }}>
-      <div className="relative z-10 container mx-auto px-4 max-w-2xl">
-        <div className="space-y-6">
-          {/* Header */}
-          <div className="flex items-center gap-3 animate-slide-up" style={{ "--delay": "0.1s" }}>
-            <div
-              className="p-2.5 rounded-xl"
-              style={{ background: "linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(34, 211, 238, 0.12))" }}
-            >
-              <Palette className="w-5 h-5" style={{ color: "var(--aurora-teal)" }} />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold gradient-text">Settings</h2>
-              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                App preferences and appearance
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen pt-20 pb-10 container mx-auto px-4 max-w-5xl">
+      <div className="space-y-6">
+        <div className="flex flex-col gap-1">
+          <h2 className="text-lg font-semibold">Theme</h2>
+          <p className="text-sm text-base-content/70">Choose a theme for your chat interface</p>
+        </div>
 
-          {/* Active Theme Card */}
-          <div className="glass-card rounded-2xl p-6 animate-slide-up" style={{ "--delay": "0.2s" }}>
-            <div className="flex items-center justify-between mb-5">
-              <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>Active Theme</h3>
-              <span
-                className="text-[10px] font-medium px-2.5 py-1 rounded-full"
-                style={{ background: "rgba(52, 211, 153, 0.1)", color: "var(--aurora-green)" }}
-              >
-                Active
-              </span>
-            </div>
-
-            {/* Aurora theme preview */}
-            <div
-              className="rounded-xl overflow-hidden neon-glow"
-              style={{ background: "var(--bg-surface)" }}
+        {/* Theme grid */}
+        <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2">
+          {THEMES.map((t) => (
+            <button
+              key={t}
+              className={`
+                group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors
+                ${theme === t ? "bg-base-200" : "hover:bg-base-200/50"}
+              `}
+              onClick={() => setTheme(t)}
             >
-              {/* Theme info bar */}
-              <div className="px-5 py-4 flex items-center gap-4" style={{ borderBottom: "1px solid rgba(34, 211, 238, 0.06)" }}>
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{
-                    background: "linear-gradient(135deg, var(--aurora-emerald), var(--aurora-teal), var(--aurora-purple))",
-                    boxShadow: "0 0 20px rgba(16, 185, 129, 0.2)",
-                  }}
-                >
-                  <Sparkles className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-semibold" style={{ color: "var(--text-primary)" }}>Aurora</h4>
-                  <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                    Dark theme with Northern Lights inspired colors
-                  </p>
+              <div className="relative h-8 w-full rounded-md overflow-hidden" data-theme={t}>
+                <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">
+                  <div className="rounded bg-primary"></div>
+                  <div className="rounded bg-secondary"></div>
+                  <div className="rounded bg-accent"></div>
+                  <div className="rounded bg-neutral"></div>
                 </div>
               </div>
+              <span className="text-[11px] font-medium truncate w-full text-center">
+                {t.charAt(0).toUpperCase() + t.slice(1)}
+              </span>
+            </button>
+          ))}
+        </div>
 
-              {/* Color palette display */}
-              <div className="px-5 py-4">
-                <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>Color Palette</p>
-                <div className="flex gap-3">
-                  {[
-                    { color: "var(--aurora-emerald)", name: "Emerald" },
-                    { color: "var(--aurora-teal)", name: "Teal" },
-                    { color: "var(--aurora-blue)", name: "Blue" },
-                    { color: "var(--aurora-purple)", name: "Purple" },
-                    { color: "var(--aurora-pink)", name: "Pink" },
-                  ].map((c) => (
-                    <div key={c.name} className="flex flex-col items-center gap-1.5">
+        {/* Preview */}
+        <h3 className="text-lg font-semibold mb-3">Preview</h3>
+        <div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow-lg">
+          <div className="p-4 bg-base-200">
+            <div className="max-w-lg mx-auto">
+              <div
+                className="bg-base-100 rounded-xl shadow-sm overflow-hidden"
+              >
+                {/* Mock Chat UI */}
+                <div className="px-4 py-3 border-b border-base-300 bg-base-100">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-content font-medium">
+                      J
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-sm">John Doe</h3>
+                      <p className="text-xs text-base-content/70">Online</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mock Messages */}
+                <div className="p-4 space-y-4 min-h-[200px] max-h-[200px] overflow-y-auto bg-base-100">
+                  {PREVIEW_MESSAGES.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex ${message.isSent ? "justify-end" : "justify-start"}`}
+                    >
                       <div
-                        className="w-10 h-10 rounded-lg transition-transform duration-200 hover:scale-110"
-                        style={{
-                          background: c.color,
-                          boxShadow: `0 0 12px ${c.color}33`,
-                        }}
-                      />
-                      <span className="text-[10px]" style={{ color: "var(--text-muted)" }}>{c.name}</span>
+                        className={`
+                          max-w-[80%] rounded-xl p-3 shadow-sm
+                          ${message.isSent ? "msg-sent" : "msg-received"}
+                        `}
+                      >
+                        <p className="text-sm">{message.content}</p>
+                        <p className="text-[10px] mt-1.5 opacity-70">12:00 PM</p>
+                      </div>
                     </div>
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
 
-          {/* Appearance Info Card */}
-          <div className="glass-card rounded-2xl p-6 animate-slide-up" style={{ "--delay": "0.3s" }}>
-            <div className="flex items-center gap-2 mb-4">
-              <Monitor className="w-4 h-4" style={{ color: "var(--aurora-teal)" }} />
-              <h3 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>Appearance</h3>
-            </div>
-            <div className="space-y-3">
-              <div
-                className="flex items-center justify-between py-3 px-4 rounded-xl"
-                style={{ background: "var(--bg-elevated)", border: "1px solid rgba(34, 211, 238, 0.06)" }}
-              >
-                <span className="text-sm" style={{ color: "var(--text-primary)" }}>Dark Mode</span>
-                <span className="text-xs px-2 py-0.5 rounded" style={{ background: "rgba(34, 211, 238, 0.1)", color: "var(--aurora-teal)" }}>
-                  Always On
-                </span>
-              </div>
-              <div
-                className="flex items-center justify-between py-3 px-4 rounded-xl"
-                style={{ background: "var(--bg-elevated)", border: "1px solid rgba(34, 211, 238, 0.06)" }}
-              >
-                <span className="text-sm" style={{ color: "var(--text-primary)" }}>Animations</span>
-                <span className="text-xs px-2 py-0.5 rounded" style={{ background: "rgba(52, 211, 153, 0.1)", color: "var(--aurora-green)" }}>
-                  Enabled
-                </span>
-              </div>
-              <div
-                className="flex items-center justify-between py-3 px-4 rounded-xl"
-                style={{ background: "var(--bg-elevated)", border: "1px solid rgba(34, 211, 238, 0.06)" }}
-              >
-                <span className="text-sm" style={{ color: "var(--text-primary)" }}>Glass Effects</span>
-                <span className="text-xs px-2 py-0.5 rounded" style={{ background: "rgba(52, 211, 153, 0.1)", color: "var(--aurora-green)" }}>
-                  Enabled
-                </span>
+                {/* Mock Input */}
+                <div className="p-4 border-t border-base-300 bg-base-100">
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      className="input input-bordered flex-1 text-sm h-10"
+                      placeholder="Type a message..."
+                      value="This is a preview"
+                      readOnly
+                    />
+                    <button className="btn btn-primary h-10 min-h-0">
+                      <Send size={18} />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

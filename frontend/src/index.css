@@ -2,58 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ===== Aurora Theme Design Tokens ===== */
+/* ===== Aurora Color Constants (always available for gradients) ===== */
 :root {
-  --bg-deep: #050a0e;
-  --bg-surface: #0a1118;
-  --bg-elevated: #111b24;
-  --bg-hover: #162230;
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-glow: rgba(34, 211, 238, 0.3);
-  --text-primary: #e0f2f1;
-  --text-muted: #6b9b97;
-  --online-color: #34d399;
-
-  /* Aurora palette */
   --aurora-green: #34d399;
   --aurora-teal: #22d3ee;
   --aurora-blue: #60a5fa;
   --aurora-purple: #a78bfa;
   --aurora-pink: #f472b6;
   --aurora-emerald: #10b981;
-
-  /* Primary gradients */
-  --aurora-gradient: linear-gradient(135deg, #10b981, #22d3ee, #a78bfa, #f472b6);
-  --aurora-gradient-soft: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(34, 211, 238, 0.15), rgba(167, 139, 250, 0.1));
 }
 
-/* ===== Global Dark Styles ===== */
-body {
-  background-color: var(--bg-deep);
-  color: var(--text-primary);
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(34, 211, 238, 0.15);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(34, 211, 238, 0.3);
+/* ===== Aurora-Scoped Variables (only active when aurora theme selected) ===== */
+[data-theme="aurora"] {
+  --bg-deep: #050a0e;
+  --bg-surface: #0a1118;
+  --bg-elevated: #111b24;
+  --bg-hover: #162230;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --text-primary: #e0f2f1;
+  --text-muted: #6b9b97;
+  --online-color: #34d399;
 }
 
 /* ===== Keyframe Animations ===== */
 
-/* Aurora background flow */
 @keyframes aurora-flow {
   0% {
     background-position: 0% 50%;
@@ -72,23 +44,6 @@ body {
   100% {
     background-position: 0% 50%;
     filter: hue-rotate(0deg);
-  }
-}
-
-/* Aurora shimmer on surfaces */
-@keyframes aurora-shimmer {
-  0% {
-    opacity: 0.3;
-    transform: translateX(-50%) skewX(-15deg);
-  }
-
-  50% {
-    opacity: 0.6;
-  }
-
-  100% {
-    opacity: 0.3;
-    transform: translateX(150%) skewX(-15deg);
   }
 }
 
@@ -211,16 +166,6 @@ body {
   }
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-
-  100% {
-    background-position: 200% 0;
-  }
-}
-
 @keyframes message-in {
   from {
     opacity: 0;
@@ -265,11 +210,6 @@ body {
 
 /* ===== Animation Utility Classes ===== */
 
-.animate-aurora-flow {
-  background-size: 300% 300%;
-  animation: aurora-flow 12s ease infinite;
-}
-
 .animate-float-particle {
   animation: float-particle var(--duration, 6s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
@@ -309,11 +249,6 @@ body {
   animation: slow-spin 20s linear infinite;
 }
 
-.animate-shimmer {
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
-}
-
 .animate-message-in {
   animation: message-in 0.3s ease-out forwards;
 }
@@ -322,47 +257,84 @@ body {
   animation: pulse-online 2s ease-in-out infinite;
 }
 
-.animate-border-glow-aurora {
-  animation: border-glow-aurora 4s ease-in-out infinite;
+/* ===== Aurora-Only Visibility ===== */
+.aurora-only {
+  display: none;
 }
 
-/* ===== Component Utility Classes ===== */
+[data-theme="aurora"] .aurora-only {
+  display: block;
+}
 
-/* Aurora glass card */
+/* ===== Custom Scrollbar (Aurora) ===== */
+[data-theme="aurora"] ::-webkit-scrollbar {
+  width: 5px;
+}
+
+[data-theme="aurora"] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="aurora"] ::-webkit-scrollbar-thumb {
+  background: rgba(34, 211, 238, 0.15);
+  border-radius: 10px;
+}
+
+[data-theme="aurora"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.3);
+}
+
+/* ===== Component Classes — Default (all themes) ===== */
+
+/* Glass card — default uses DaisyUI */
 .glass-card {
+  background: oklch(var(--b2, 0.2 0 0));
+  border: 1px solid oklch(var(--b3, 0.25 0 0));
+  border-radius: 1.5rem;
+}
+
+/* Glass card — aurora override */
+[data-theme="aurora"] .glass-card {
   background: rgba(10, 17, 24, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(34, 211, 238, 0.08);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.4),
-    0 0 60px rgba(16, 185, 129, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 60px rgba(16, 185, 129, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
-/* Aurora gradient button */
+/* Gradient accent button — default */
 .gradient-accent {
+  background: oklch(var(--p, 0.6 0.2 200));
+  color: oklch(var(--pc, 0.98 0 0));
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.gradient-accent:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* Gradient accent — aurora */
+[data-theme="aurora"] .gradient-accent {
   background: linear-gradient(135deg, var(--aurora-emerald), var(--aurora-teal), var(--aurora-purple));
   background-size: 200% 200%;
   animation: gradient-shift 4s ease infinite;
   color: white;
-  border: none;
-  transition: all 0.3s ease;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.gradient-accent:hover {
-  filter: brightness(1.15);
+[data-theme="aurora"] .gradient-accent:hover {
   box-shadow: 0 0 25px rgba(16, 185, 129, 0.3), 0 0 50px rgba(34, 211, 238, 0.15);
-  transform: translateY(-1px);
 }
 
-.gradient-accent:active {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Aurora gradient text */
+/* Gradient text — default */
 .gradient-text {
+  color: oklch(var(--p, 0.6 0.2 200));
+}
+
+/* Gradient text — aurora */
+[data-theme="aurora"] .gradient-text {
   background: linear-gradient(135deg, var(--aurora-green), var(--aurora-teal), var(--aurora-purple), var(--aurora-pink));
   background-size: 200% 200%;
   animation: gradient-shift 6s ease infinite;
@@ -371,63 +343,54 @@ body {
   background-clip: text;
 }
 
-/* Surface card */
-.surface-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 1rem;
-}
-
-/* Neon aurora glow */
+/* Neon glow — default: subtle border */
 .neon-glow {
-  box-shadow:
-    0 0 15px rgba(16, 185, 129, 0.08),
-    0 0 30px rgba(34, 211, 238, 0.05),
-    0 0 60px rgba(167, 139, 250, 0.03);
+  border: 1px solid oklch(var(--b3, 0.25 0 0));
+}
+
+/* Neon glow — aurora */
+[data-theme="aurora"] .neon-glow {
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.08), 0 0 30px rgba(34, 211, 238, 0.05), 0 0 60px rgba(167, 139, 250, 0.03);
   border: 1px solid rgba(34, 211, 238, 0.1);
+  animation: border-glow-aurora 4s ease-in-out infinite;
 }
 
-/* Dark input with aurora focus */
-.dark-input {
-  background: var(--bg-elevated) !important;
-  border: 1px solid var(--border-subtle) !important;
-  color: var(--text-primary) !important;
-  transition: all 0.3s ease;
-}
-
-.dark-input:focus {
-  border-color: var(--aurora-teal) !important;
-  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1), 0 0 20px rgba(34, 211, 238, 0.08) !important;
-}
-
-.dark-input::placeholder {
-  color: var(--text-muted) !important;
-  opacity: 0.6;
-}
-
-/* Aurora sent message bubble */
+/* Sent message bubble — default */
 .msg-sent {
+  background: oklch(var(--p, 0.6 0.2 200));
+  color: oklch(var(--pc, 0.98 0 0));
+  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+}
+
+/* Sent message — aurora */
+[data-theme="aurora"] .msg-sent {
   background: linear-gradient(135deg, var(--aurora-emerald), var(--aurora-teal));
   color: white;
-  border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
   box-shadow: 0 2px 15px rgba(16, 185, 129, 0.2);
 }
 
-/* Received message bubble */
+/* Received message bubble — default */
 .msg-received {
-  background: var(--bg-elevated);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
+  background: oklch(var(--b2, 0.2 0 0));
+  color: oklch(var(--bc, 0.9 0 0));
+  border: 1px solid oklch(var(--b3, 0.25 0 0));
   border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
 }
 
-/* Aurora background overlay */
+/* Received message — aurora */
+[data-theme="aurora"] .msg-received {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+/* Aurora background overlay — only for aurora theme */
 .aurora-bg {
   position: relative;
   overflow: hidden;
 }
 
-.aurora-bg::before {
+[data-theme="aurora"] .aurora-bg::before {
   content: '';
   position: absolute;
   top: -50%;

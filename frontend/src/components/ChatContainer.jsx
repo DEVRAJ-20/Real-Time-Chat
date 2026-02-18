@@ -42,61 +42,44 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-hidden" style={{ background: "var(--bg-deep)" }}>
+    <div className="flex-1 flex flex-col overflow-hidden">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => {
           const isSent = message.senderId === authUser._id;
           return (
             <div
               key={message._id}
-              className={`flex ${isSent ? "justify-end" : "justify-start"} animate-message-in`}
+              className={`chat ${isSent ? "chat-end" : "chat-start"} animate-message-in`}
             >
-              {!isSent && (
-                <div className="flex-shrink-0 mr-2 self-end">
+              <div className="chat-image avatar">
+                <div className="size-10 rounded-full border">
                   <img
-                    src={selectedUser.profilePic || "/avatar.png"}
-                    alt="avatar"
-                    className="size-8 rounded-full object-cover"
-                    style={{ border: "1px solid rgba(34, 211, 238, 0.1)" }}
+                    src={isSent ? authUser.profilePic || "/avatar.png" : selectedUser.profilePic || "/avatar.png"}
+                    alt="profile pic"
                   />
                 </div>
-              )}
-
-              <div className="max-w-[70%]">
-                <div className={isSent ? "msg-sent" : "msg-received"} style={{ padding: "0.7rem 1rem" }}>
-                  {message.image && (
-                    <img
-                      src={message.image}
-                      alt="Attachment"
-                      className="sm:max-w-[200px] rounded-lg mb-2"
-                    />
-                  )}
-                  {message.text && <p className="text-sm leading-relaxed">{message.text}</p>}
-                </div>
-                <p
-                  className={`text-[10px] mt-1 px-1 ${isSent ? "text-right" : "text-left"}`}
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {formatMessageTime(message.createdAt)}
-                </p>
               </div>
-
-              {isSent && (
-                <div className="flex-shrink-0 ml-2 self-end">
+              <div className="chat-header mb-1">
+                <time className="text-xs opacity-50 ml-1">
+                  {formatMessageTime(message.createdAt)}
+                </time>
+              </div>
+              <div className={`chat-bubble flex flex-col ${isSent ? "msg-sent" : "msg-received"}`}>
+                {message.image && (
                   <img
-                    src={authUser.profilePic || "/avatar.png"}
-                    alt="avatar"
-                    className="size-8 rounded-full object-cover"
-                    style={{ border: "1px solid rgba(34, 211, 238, 0.1)" }}
+                    src={message.image}
+                    alt="Attachment"
+                    className="sm:max-w-[200px] rounded-md mb-2"
                   />
-                </div>
-              )}
+                )}
+                {message.text && <p>{message.text}</p>}
+              </div>
             </div>
           );
         })}
-        {/* Scroll anchor — always at the bottom */}
+        {/* Scroll anchor */}
         <div ref={messageEndRef} />
       </div>
 
