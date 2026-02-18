@@ -17,7 +17,7 @@ const ChatContainer = () => {
     unsubscribeFromMessages,
   } = useChatStore();
   const { authUser } = useAuthStore();
-  const messageEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   useEffect(() => {
     getMessages(selectedUser._id);
@@ -26,8 +26,9 @@ const ChatContainer = () => {
   }, [selectedUser._id, getMessages, subscribeToMessages, unsubscribeFromMessages]);
 
   useEffect(() => {
-    if (messageEndRef.current && messages) {
-      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    // Scroll the messages container to the bottom directly
+    if (messagesContainerRef.current && messages) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -42,10 +43,13 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col min-h-0">
+    <div className="flex-1 flex flex-col overflow-hidden">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto min-h-0 p-4 space-y-4">
+      <div
+        ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4"
+      >
         {messages.map((message) => {
           const isSent = message.senderId === authUser._id;
           return (
@@ -79,8 +83,6 @@ const ChatContainer = () => {
             </div>
           );
         })}
-        {/* Scroll anchor */}
-        <div ref={messageEndRef} />
       </div>
 
       <MessageInput />
