@@ -88,6 +88,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 <div align="center">
 
-**Made with ❤️ by [Devraj K Chandani](https://github.com/DEVRAJ-20)**
+**Made by [Devraj K Chandani](https://github.com/DEVRAJ-20)**
 
 </div>
